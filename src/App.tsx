@@ -4,6 +4,7 @@ import { Activity } from 'lucide-react'
 import BottomNav from './components/BottomNav'
 import HabitsScreen from './components/HabitsScreen'
 import HeatmapScreen from './components/HeatmapScreen'
+import SmokeTest from './components/SmokeTest'
 import TodayScreen from './components/TodayScreen'
 import { parseDate, readStore, STORAGE_KEY, todayKey } from './data'
 import type { Entry, Habit, Screen, Store } from './types'
@@ -94,6 +95,8 @@ function App() {
       </header>
 
       <main className="main-content">
+        <SmokeTest />
+
         {screen === 'today' && (
           <TodayScreen
             date={selectedDate}
