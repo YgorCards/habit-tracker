@@ -847,6 +847,129 @@ h2, h3, p {
   padding-top: 0;
 }
 
+.activity-mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid #34343f;
+  border-radius: 9px;
+  background: #15151b;
+}
+
+.activity-mode-switch button {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #a5a5b0;
+  font: 600 12px Manrope, sans-serif;
+}
+
+.activity-mode-switch button.mode-selected {
+  background: #292733;
+  color: #eeeafc;
+}
+
+.activity-mode-switch button:disabled {
+  cursor: not-allowed;
+  opacity: .5;
+}
+
+.duration-input-row {
+  display: flex;
+  gap: 7px;
+}
+
+.duration-input-row input {
+  min-width: 0;
+  flex: 1;
+}
+
+.unit-toggle {
+  min-width: 66px;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid #383843;
+  border-radius: 7px;
+  background: #22222b;
+  color: #d5d2e9;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.unit-toggle:hover,
+.secondary-button:hover {
+  border-color: #625b83;
+}
+
+.timer-context {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #b9b8c3;
+  font-size: 12px;
+}
+
+.timer-context strong {
+  overflow: hidden;
+  color: #f1f0f5;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.timer-display {
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid #383843;
+  border-radius: 10px;
+  background: #17171e;
+  color: #9a7cff;
+}
+
+.timer-display strong {
+  color: #f2f0f7;
+  font: 600 32px ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1px;
+}
+
+.timer-display.timer-stopped {
+  border-color: #514a70;
+  background: #1c1a25;
+}
+
+.timer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timer-actions .primary-button {
+  width: 100%;
+}
+
+.secondary-button {
+  min-height: 38px;
+  border: 1px solid #383843;
+  border-radius: 7px;
+  background: transparent;
+  color: #a7a6b1;
+  font-size: 12px;
+}
+
 .bottom-nav {
   position: fixed;
   z-index: 10;

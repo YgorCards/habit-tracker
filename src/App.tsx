@@ -268,6 +268,7 @@ function App() {
 
             {screen === 'habits' && (
               <HabitsScreen
+                uid={user.uid}
                 habits={store.habits}
                 onAddHabit={handleAddHabit}
                 onAddEntry={handleAddEntry}
