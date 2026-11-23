@@ -64,17 +64,6 @@ Aplicação web para registrar hábitos, anotar atividades e acompanhar o tempo 
 
 Tailwind, Zustand, date-fns e Vitest estavam na proposta inicial, mas não estão sendo usados nesta versão.
 
-## Configuração local
-
-Crie um arquivo `.env` na raiz com a configuração do app Web do Firebase:
-
-```env
-VITE_FIREBASE_API_KEY=...
-VITE_FIREBASE_AUTH_DOMAIN=...
-VITE_FIREBASE_PROJECT_ID=...
-VITE_FIREBASE_APP_ID=...
-```
-
 Instale as dependências e inicie o servidor:
 
 ```bash
