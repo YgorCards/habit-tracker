@@ -1,7 +1,3 @@
-import type { Entry, Habit, Store } from './types'
-
-export const STORAGE_KEY = 'ritmo-habit-tracker-v1'
-
 export const habitColors = [
   { name: 'Roxo', value: '#9a7cff' },
   { name: 'Azul', value: '#4ab8f0' },
@@ -9,12 +5,6 @@ export const habitColors = [
   { name: 'Rosa', value: '#f06f9b' },
   { name: 'Laranja', value: '#f3a44e' },
   { name: 'Amarelo', value: '#e4cb54' },
-]
-
-export const starterHabits: Habit[] = [
-  { id: 'h1', name: 'Leitura', color: '#43c985' },
-  { id: 'h2', name: 'Estudar inglês', color: '#f06f9b' },
-  { id: 'h3', name: 'Caminhada', color: '#4ab8f0' },
 ]
 
 export const monthNames = [
@@ -56,72 +46,6 @@ export function formatDate(key: string) {
     month: 'long',
     weekday: 'long',
   })
-}
-
-function createDemoEntries(): Entry[] {
-  const entries: Entry[] = []
-  const today = new Date()
-  const sampleMinutes = [15, 20, 25, 30, 40, 50]
-
-  for (let offset = 0; offset < 365; offset += 1) {
-    const date = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate() - offset,
-    )
-    const seed = (offset * 37 + date.getDate() * 13) % 11
-
-    if (seed < 5 && offset !== 0) continue
-
-    const count = 1 + (seed % 3)
-    for (let index = 0; index < count; index += 1) {
-      const habitIndex = (seed + index * 2 + offset) % starterHabits.length
-      const habit = starterHabits[habitIndex]
-      const minutes = sampleMinutes[(seed + index) % sampleMinutes.length]
-
-      entries.push({
-        id: `demo-${offset}-${index}`,
-        habitId: habit.id,
-        date: dateKey(date),
-        minutes,
-        note: '',
-      })
-    }
-  }
-
-  return entries
-}
-
-export function readStore(): Store {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY)
-
-    if (saved) {
-      const parsed = JSON.parse(saved) as Store
-      const habits = parsed.habits.map((habit, index) => {
-        const hasValidColor = habitColors.some(
-          (option) => option.value === habit.color,
-        )
-
-        return {
-          id: habit.id,
-          name: habit.name,
-          color: hasValidColor
-            ? habit.color
-            : habitColors[index % habitColors.length].value,
-        }
-      })
-
-      return { habits, entries: parsed.entries }
-    }
-  } catch {
-    // Start with the sample data if saved data cannot be read.
-  }
-
-  return {
-    habits: starterHabits,
-    entries: createDemoEntries(),
-  }
 }
 
 export function calendarDates(month: Date) {
