@@ -6,8 +6,8 @@ import type { Entry, Habit } from '../types'
 
 type Props = {
   habits: Habit[]
-  onAddHabit: (habit: Omit<Habit, 'id'>) => boolean
-  onAddEntry: (entry: Omit<Entry, 'id'>) => void
+  onAddHabit: (habit: Omit<Habit, 'id'>) => Promise<boolean>
+  onAddEntry: (entry: Omit<Entry, 'id'>) => Promise<void>
 }
 
 export default function HabitsScreen({ habits, onAddHabit, onAddEntry }: Props) {
@@ -19,8 +19,11 @@ export default function HabitsScreen({ habits, onAddHabit, onAddEntry }: Props) 
   const [minutes, setMinutes] = useState('25')
   const [note, setNote] = useState('')
   const [confirmation, setConfirmation] = useState('')
+  const [entryError, setEntryError] = useState('')
+  const [savingHabit, setSavingHabit] = useState(false)
+  const [savingEntry, setSavingEntry] = useState(false)
 
-  const submitHabit = (event: React.FormEvent) => {
+  const submitHabit = async (event: React.FormEvent) => {
     event.preventDefault()
 
     const trimmedName = name.trim()
@@ -37,15 +40,25 @@ export default function HabitsScreen({ habits, onAddHabit, onAddEntry }: Props) 
       return
     }
 
-    const created = onAddHabit({ name: trimmedName, color })
-    if (!created) return
+    try {
+      setSavingHabit(true)
+      const created = await onAddHabit({ name: trimmedName, color })
+      if (!created) {
+        setHabitError('Esse hábito já existe.')
+        return
+      }
 
-    setName('')
-    setHabitError('')
-    setConfirmation('Hábito criado!')
+      setName('')
+      setHabitError('')
+      setConfirmation('Hábito criado!')
+    } catch {
+      setHabitError('Não foi possível salvar. Tente novamente.')
+    } finally {
+      setSavingHabit(false)
+    }
   }
 
-  const submitEntry = (event: React.FormEvent) => {
+  const submitEntry = async (event: React.FormEvent) => {
     event.preventDefault()
 
     const duration = Number(minutes)
@@ -54,15 +67,23 @@ export default function HabitsScreen({ habits, onAddHabit, onAddEntry }: Props) 
       return
     }
 
-    onAddEntry({
-      habitId: selectedHabit,
-      date: entryDate,
-      minutes: duration,
-      note: note.trim(),
-    })
-    setNote('')
-    setMinutes('25')
-    setConfirmation('Atividade salva!')
+    try {
+      setSavingEntry(true)
+      await onAddEntry({
+        habitId: selectedHabit,
+        date: entryDate,
+        minutes: duration,
+        note: note.trim(),
+      })
+      setNote('')
+      setMinutes('25')
+      setEntryError('')
+      setConfirmation('Atividade salva!')
+    } catch {
+      setEntryError('Não foi possível salvar. Tente novamente.')
+    } finally {
+      setSavingEntry(false)
+    }
   }
 
   return (
@@ -108,8 +129,8 @@ export default function HabitsScreen({ habits, onAddHabit, onAddEntry }: Props) 
           </fieldset>
 
           {habitError && <p className="form-error">{habitError}</p>}
-          <button className="primary-button" type="submit">
-            Criar hábito
+          <button className="primary-button" type="submit" disabled={savingHabit}>
+            {savingHabit ? 'Salvando…' : 'Criar hábito'}
           </button>
         </form>
       </section>
@@ -167,9 +188,11 @@ export default function HabitsScreen({ habits, onAddHabit, onAddEntry }: Props) 
               />
             </label>
 
-            <button className="primary-button" type="submit">
+            {entryError && <p className="form-error">{entryError}</p>}
+
+            <button className="primary-button" type="submit" disabled={savingEntry}>
               <Check size={16} />
-              Salvar atividade
+              {savingEntry ? 'Salvando…' : 'Salvar atividade'}
             </button>
           </form>
         )}
