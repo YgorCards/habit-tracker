@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Activity, LogOut } from 'lucide-react'
 import {
-  getRedirectResult,
   onAuthStateChanged,
   signInWithPopup,
-  signInWithRedirect,
   signOut,
 } from 'firebase/auth'
 import type { User } from 'firebase/auth'
@@ -62,10 +60,6 @@ function App() {
   })
 
   useEffect(() => {
-    void getRedirectResult(auth).catch((error: unknown) => {
-      setSignInError(getErrorMessage(error))
-    })
-
     return onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser)
       setAuthLoading(false)
@@ -129,13 +123,7 @@ function App() {
     setSignInError('')
 
     try {
-      const isMobile = window.matchMedia('(max-width: 600px)').matches
-
-      if (isMobile) {
-        await signInWithRedirect(auth, googleProvider)
-      } else {
-        await signInWithPopup(auth, googleProvider)
-      }
+      await signInWithPopup(auth, googleProvider)
     } catch (error) {
       setSignInError(getErrorMessage(error))
     } finally {
