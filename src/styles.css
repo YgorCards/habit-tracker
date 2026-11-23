@@ -88,6 +88,56 @@ button {
   padding-top: 19px;
 }
 
+.smoke-test-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+  padding: 12px;
+  border: 1px solid #38344d;
+  border-radius: 10px;
+  background: #201e2b;
+}
+
+.smoke-test-card h2 {
+  margin: 0;
+  color: #f0eef8;
+  font: 600 13px Manrope, sans-serif;
+}
+
+.smoke-test-card p {
+  margin: 4px 0 0;
+  color: #aaa7b7;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.smoke-test-card .primary-button {
+  min-height: 36px;
+  padding: 7px 10px;
+  font-size: 11px;
+}
+
+.smoke-test-card .primary-button:disabled {
+  cursor: wait;
+  opacity: .65;
+}
+
+.smoke-test-result,
+.smoke-test-error {
+  width: 100%;
+}
+
+.smoke-test-result {
+  color: #70d7a4 !important;
+}
+
+.smoke-test-error {
+  color: #ff879c !important;
+}
+
 .screen-title-row {
   min-height: 35px;
   display: flex;
