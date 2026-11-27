@@ -22,9 +22,11 @@ function yearDays() {
   const end = new Date()
   end.setHours(0, 0, 0, 0)
 
-  const start = new Date(end)
-  start.setDate(start.getDate() - 363)
+  const year = end.getFullYear()
+  const start = new Date(year, 0, 1)
   start.setDate(start.getDate() - ((start.getDay() + 6) % 7))
+  end.setFullYear(year, 11, 31)
+  end.setDate(end.getDate() + (7 - end.getDay()) % 7)
 
   const days: Date[] = []
   for (const day = new Date(start); day <= end; day.setDate(day.getDate() + 1)) {
@@ -49,6 +51,8 @@ function HabitHeatmap({
   selectedDate,
   onSelectDate,
 }: HabitHeatmapProps) {
+  const yearStart = new Date(new Date().getFullYear(), 0, 1)
+  const nextYearStart = new Date(yearStart.getFullYear() + 1, 0, 1)
   const entriesByDate = new Map<string, Entry[]>()
   for (const entry of entries) {
     const dayEntries = entriesByDate.get(entry.date) ?? []
@@ -77,7 +81,8 @@ function HabitHeatmap({
       <div className="habit-heatmap-scroll">
         <div className="habit-heatmap-months">
           {days.map((day, index) => {
-            if (day.getDate() !== 1 && index !== 0) return null
+            if (day < yearStart || day >= nextYearStart) return null
+            if (day.getDate() !== 1) return null
 
             const month = day
               .toLocaleDateString('pt-BR', { month: 'short' })
@@ -96,6 +101,9 @@ function HabitHeatmap({
 
         <div className="habit-heatmap-cells">
           {days.map((day) => {
+            if (day < yearStart || day >= nextYearStart) {
+              return <span key={dateKey(day)} className="mini-heat-cell heatmap-placeholder" aria-hidden="true" />
+            }
             const key = dateKey(day)
             const dayEntries = entriesByDate.get(key) ?? []
             const minutes = dayEntries.reduce(
@@ -133,7 +141,7 @@ export default function HeatmapScreen({
     <section className="screen-section heatmap-screen">
       <div className="screen-title-row">
         <h1>Heatmap</h1>
-        <span className="heatmap-period">Últimos 12 meses</span>
+        <span className="heatmap-period">Desde janeiro</span>
       </div>
 
       {habits.length === 0 ? (

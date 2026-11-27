@@ -667,10 +667,11 @@ h2, h3, p {
   height: 14px;
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 10px;
+  grid-auto-columns: 9px;
   gap: 3px;
   min-width: max-content;
   margin-left: 1px;
+  padding-right: 32px;
   color: #92929e;
   font-size: 8px;
 }
@@ -694,6 +695,11 @@ h2, h3, p {
   padding: 0;
   border: 0;
   border-radius: 2px;
+  background: #292933;
+}
+
+.heatmap-placeholder {
+  display: block;
   background: #292933;
 }
 
