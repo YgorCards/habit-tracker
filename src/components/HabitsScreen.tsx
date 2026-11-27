@@ -13,6 +13,7 @@ import { habitColors, todayKey } from '../data'
 import type { Entry, Habit } from '../types'
 
 type Props = {
+  mode: 'activity' | 'habits'
   uid: string
   habits: Habit[]
   onAddHabit: (habit: Omit<Habit, 'id'>) => Promise<boolean>
@@ -69,7 +70,7 @@ function formatElapsed(totalSeconds: number) {
     .join(':')
 }
 
-export default function HabitsScreen({ uid, habits, onAddHabit, onAddEntry }: Props) {
+export default function HabitsScreen({ mode, uid, habits, onAddHabit, onAddEntry }: Props) {
   const [name, setName] = useState('')
   const [color, setColor] = useState(habitColors[0].value)
   const [habitError, setHabitError] = useState('')
@@ -299,9 +300,10 @@ export default function HabitsScreen({ uid, habits, onAddHabit, onAddEntry }: Pr
   return (
     <section className="screen-section habits-screen">
       <div className="screen-title-row">
-        <h1>Hábitos</h1>
+        <h1>{mode === 'activity' ? 'Atividade' : 'Hábitos'}</h1>
       </div>
 
+      {mode === 'habits' && (
       <section className="content-card create-habit-card">
         <form className="inline-form" onSubmit={submitHabit}>
           <label className="field-label">
@@ -344,7 +346,9 @@ export default function HabitsScreen({ uid, habits, onAddHabit, onAddEntry }: Pr
           </button>
         </form>
       </section>
+      )}
 
+      {mode === 'activity' && (
       <section className="content-card add-activity-card">
         <div className="form-section-title">Registrar atividade</div>
         {habits.length === 0 ? (
@@ -542,6 +546,7 @@ export default function HabitsScreen({ uid, habits, onAddHabit, onAddEntry }: Pr
           </form>
         )}
       </section>
+      )}
 
       {confirmation && (
         <div

@@ -253,7 +253,7 @@ function App() {
                 onSelectDate={selectTodayDate}
                 onMonthChange={changeMonth}
                 onRemove={handleRemoveEntry}
-                onAddActivity={() => setScreen('habits')}
+                onAddActivity={() => setScreen('activity')}
               />
             )}
 
@@ -266,8 +266,9 @@ function App() {
               />
             )}
 
-            {screen === 'habits' && (
+            {(screen === 'activity' || screen === 'habits') && (
               <HabitsScreen
+                mode={screen}
                 uid={user.uid}
                 habits={store.habits}
                 onAddHabit={handleAddHabit}

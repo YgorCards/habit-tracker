@@ -17,4 +17,4 @@ export type Store = {
   entries: Entry[]
 }
 
-export type Screen = 'today' | 'heatmap' | 'habits'
+export type Screen = 'today' | 'heatmap' | 'activity' | 'habits'
