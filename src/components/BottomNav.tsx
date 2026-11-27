@@ -1,4 +1,4 @@
-import { CalendarDays, Grid2X2, ListPlus } from 'lucide-react'
+import { Activity, CalendarDays, Grid2X2, ListPlus } from 'lucide-react'
 
 import type { Screen } from '../types'
 
@@ -10,6 +10,7 @@ type Props = {
 const items = [
   { id: 'today', label: 'Hoje', icon: CalendarDays },
   { id: 'heatmap', label: 'Heatmap', icon: Grid2X2 },
+  { id: 'activity', label: 'Atividade', icon: Activity },
   { id: 'habits', label: 'Hábitos', icon: ListPlus },
 ] as const
 

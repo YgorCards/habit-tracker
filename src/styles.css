@@ -977,7 +977,7 @@ h2, h3, p {
   bottom: 0;
   left: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 5px;
   width: min(100%, 520px);
   min-height: calc(78px + env(safe-area-inset-bottom));
